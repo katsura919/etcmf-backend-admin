@@ -1,0 +1,245 @@
+openapi: 3.0.0
+info:
+  title: Munipal API
+  version: 1.0.0
+  description: API for managing municipals
+
+servers:
+  - url: http://localhost:5000
+    description: Local server
+  - url: https://your-deployed-url.com
+    description: Deployed server
+
+tags:
+  - name: Municipal
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Municipal:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "12345"
+        name:
+          type: string
+          example: "Municipal Hall"
+        address:
+          type: string
+          example: "123 Main Street"
+
+security:
+  - BearerAuth: [] 
+
+paths:
+  /admin/register:
+    post:
+      tags:
+        - Admin
+      summary: Register an admin
+      description: Register a new admin account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Admin"
+            example:
+              firstname: "John"
+              lastname: "Doe"
+              middlename: "E"
+              email: "john.doe@example.com"
+              password: "password123"
+      responses:
+        "201":
+          description: Admin registered successfully
+        "400":
+          description: Admin already exists
+        "500":
+          description: Server error
+
+  /admin/login:
+    post:
+      tags:
+        - Admin
+      summary: Admin login
+      description: Log in as an admin and receive a JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Admin"
+            example:
+              email: "john.doe@example.com"
+              password: "password123"
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  admin:
+                    $ref: "#/components/schemas/Admin"
+        "400":
+          description: Invalid credentials
+        "500":
+          description: Server error
+
+  /admin/profile:
+    get:
+      tags:
+        - Admin
+      summary: Get admin profile
+      description: Get the profile of the currently logged-in admin
+      security:
+        - BearerAuth: []  
+      responses:
+        "200":
+          description: Successfully retrieved admin profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Admin"
+        "401":
+          description: Unauthorized, token missing or invalid
+        "404":
+          description: Admin not found
+        "500":
+          description: Server error
+
+  /municipal:
+    get:
+      tags:
+        - Municipal
+      summary: Get all Municipals
+      description: Retrieve all municipal records
+      security:
+        - BearerAuth: [] 
+      responses:
+        "200":
+          description: Successfully retrieved municipals
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Municipal"
+              example:
+                - id: "12345"
+                  name: "Municipal Hall"
+                  address: "123 Main Street"
+                - id: "67890"
+                  name: "Central Municipal Office"
+                  address: "456 Main Road"
+
+    post:
+      tags:
+        - Municipal
+      summary: Create a new Municipal
+      description: Create a new municipal, authentication required
+      security:
+        - BearerAuth: []  
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Municipal"
+            example:
+              name: "New Municipal"
+              address: "789 New Street"
+      responses:
+        "201":
+          description: Municipal created successfully
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized, token missing or invalid
+
+  /municipal/{id}:
+    get:
+      tags:
+        - Municipal
+      summary: Get a Municipal by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          example: "12345"
+      responses:
+        "200":
+          description: Municipal found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Municipal"
+              example:
+                id: "12345"
+                name: "Municipal Hall"
+                address: "123 Main Street"
+        "404":
+          description: Municipal not found
+
+    put:
+      tags:
+        - Municipal
+      summary: Update a Municipal
+      security:
+        - BearerAuth: [] 
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          example: "12345"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Municipal"
+            example:
+              name: "Updated Municipal"
+              address: "Updated Street"
+      responses:
+        "200":
+          description: Municipal updated successfully
+        "400":
+          description: Invalid input
+        "404":
+          description: Municipal not found
+
+    delete:
+      tags:
+        - Municipal
+      summary: Delete a Municipal
+      security:
+        - BearerAuth: []  
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          example: "12345"
+      responses:
+        "200":
+          description: Municipal deleted successfully
+        "404":
+          description: Municipal not found
