@@ -12,7 +12,7 @@ const municipalSchema = new mongoose.Schema({
     required: true,
   },
 }, {
-  timestamps: true, // Automatically add createdAt and updatedAt fields
+  timestamps: true, 
 });
 
 // Create the Municipal Model

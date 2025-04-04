@@ -47,7 +47,7 @@ const getAdminProfile = async (req, res) => {
   }
 };
 
-// Export all controllers at once
+
 module.exports = {
   registerAdmin,
   loginAdmin,
