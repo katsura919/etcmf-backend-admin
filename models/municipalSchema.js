@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Define the Municipal Schema
+
 const municipalSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,7 +15,7 @@ const municipalSchema = new mongoose.Schema({
   timestamps: true, 
 });
 
-// Create the Municipal Model
+
 const Municipal = mongoose.model('Municipal', municipalSchema);
 
 module.exports = Municipal;
