@@ -1,5 +1,5 @@
 const express = require("express");
-const { registerAdmin, loginAdmin, getAdminProfile } = require("../controllers/authAdmin");
+const { registerAdmin, loginAdmin } = require("../controllers/authAdmin");
 const { body } = require("express-validator");
 const Admin = require("../models/adminSchema");
 const authMiddleware = require("../middlewares/authMiddleware");
@@ -11,9 +11,6 @@ const router = express.Router();
 router.post(
   "/register",
   [
-    body("municipalId")
-      .notEmpty().withMessage("Municipal ID is required")
-      .isMongoId().withMessage("Invalid Municipal ID"),
     body("firstname")
       .notEmpty().withMessage("First name is required"),
     body("lastname")
@@ -55,10 +52,5 @@ router.post(
   loginAdmin
 );
 
-router.get(
-  "/profile",
-  authMiddleware,
-  getAdminProfile
-);
 
 module.exports = router;

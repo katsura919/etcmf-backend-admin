@@ -5,10 +5,13 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./api-docs/swagger');  
 
 const connectDB = require('./libs/db'); 
-const municipalRoutes = require('./routes/municipalRoutes');
 const authAdminRoutes = require("./routes/authAdminRoutes");
 const authOfficerRoutes = require("./routes/officerRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const ticketRoutes = require('./routes/ticketRoutes');
+// Imported violation and penalty routes
+const violationRoutes = require('./routes/violationRoutes');
+const penaltyRoutes = require('./routes/penaltyRoutes');
 
 const app = express();
 dotenv.config();
@@ -21,10 +24,12 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // API routes
-app.use('/municipal', municipalRoutes);
 app.use('/auth/admin', authAdminRoutes);
 app.use('/auth/officer', authOfficerRoutes);
 app.use('/admin', adminRoutes);
+app.use('/ticket', ticketRoutes);
+app.use('/violations', violationRoutes);
+app.use('/penalties', penaltyRoutes);
 
 // Connect to DB and start server
 connectDB().then(() => {

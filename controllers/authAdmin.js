@@ -4,13 +4,12 @@ const bcrypt = require("bcryptjs");
 
 const registerAdmin = async (req, res) => {
   try {
-    const { municipalId, firstname, lastname, middlename, email, password, picture } = req.body;
+    const { firstname, lastname, middlename, email, password, picture } = req.body;
 
     let admin = await Admin.findOne({ email });
     if (admin) return res.status(400).json({ message: "Admin already exists" });
 
     admin = new Admin({
-      municipalId,
       firstname,
       lastname,
       middlename,
@@ -43,7 +42,6 @@ const loginAdmin = async (req, res) => {
       token,
       admin: {
         id: admin._id,
-        municipalId: admin.municipalId,
         firstname: admin.firstname,
         lastname: admin.lastname,
         middlename: admin.middlename,
@@ -58,19 +56,9 @@ const loginAdmin = async (req, res) => {
   }
 };
 
-const getAdminProfile = async (req, res) => {
-  try {
-    const admin = await Admin.findById(req.admin.id).select("-password");
-    if (!admin) return res.status(404).json({ message: "Admin not found" });
 
-    res.json(admin);
-  } catch (error) {
-    res.status(500).json({ message: "Server error", error });
-  }
-};
 
 module.exports = {
   registerAdmin,
   loginAdmin,
-  getAdminProfile,
 };

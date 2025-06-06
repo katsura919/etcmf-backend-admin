@@ -5,7 +5,7 @@ const swaggerDefinition = {
     info: {
       title: "Admin API",
       version: "1.0.0",
-      description: "API for managing municipals, admins, and officers",
+      description: "API for managing admins and officers",
     },
     servers: [
       {
@@ -26,28 +26,9 @@ const swaggerDefinition = {
         },
       },
       schemas: {
-        Municipal: {
-          type: "object",
-          properties: {
-            name: {
-              type: "string",
-              example: "Sample Municipal",
-            },
-            address: {
-              type: "string",
-              example: "123 Main Street, City",
-            },
-          },
-          required: ["name", "address"],
-        },
         Admin: {
             type: "object",
             properties: {
-              municipalId: {
-                type: "string",
-                example: "60d0fe4f5311236168a109ca",
-                description: "Reference ID of the Municipal",
-              },
               firstname: { type: "string", example: "John" },
               lastname: { type: "string", example: "Doe" },
               middlename: { type: "string", example: "Smith" },
@@ -55,16 +36,11 @@ const swaggerDefinition = {
               password: { type: "string", example: "password123" },
               picture: { type: "string", example: "https://example.com/profile.jpg", description: "Profile picture URL (optional)" }
             },
-            required: ["municipalId", "firstname", "lastname", "email", "password"],
+            required: ["firstname", "lastname", "email", "password"],
           },
         Officer: {
           type: "object",
           properties: {
-            municipal: {
-              type: "string",
-              example: "60d0fe4f5311236168a109ca",
-              description: "Reference ID of the Municipal",
-            },
             role: { type: "string", example: "Police Officer" },
             firstName: { type: "string", example: "Jane" },
             lastName: { type: "string", example: "Smith" },
@@ -76,7 +52,6 @@ const swaggerDefinition = {
             password: { type: "string", example: "officerpass" },
           },
           required: [
-            "municipal",
             "role",
             "firstName",
             "lastName",
@@ -96,4 +71,3 @@ const swaggerDefinition = {
   };
   
   module.exports = swaggerDefinition;
-  

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const municipalSchema = new mongoose.Schema({
+const schema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
@@ -16,6 +16,6 @@ const municipalSchema = new mongoose.Schema({
 });
 
 
-const Municipal = mongoose.model('Municipal', municipalSchema);
+const Municipal = mongoose.model('Municipal', schema);
 
 module.exports = Municipal;

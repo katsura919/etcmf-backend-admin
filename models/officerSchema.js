@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const officerSchema = new mongoose.Schema({
-  municipal: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Municipal', 
-    required: true,
-  },
   role: {
     type: String,
     required: true,

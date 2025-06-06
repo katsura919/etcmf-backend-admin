@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const adminSchema = new mongoose.Schema({
-  municipalId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Municipal",
-    required: true,
-  },
   firstname: {
     type: String,
     required: true,

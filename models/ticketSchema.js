@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const ticketSchema = new mongoose.Schema({
-  municipalId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Municipal',
-    required: true,
-  },
   driverId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Driver',
