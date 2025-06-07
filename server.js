@@ -13,6 +13,8 @@ const ticketRoutes = require('./routes/ticketRoutes');
 const violationRoutes = require('./routes/violationRoutes');
 const penaltyRoutes = require('./routes/penaltyRoutes');
 
+const api = require('./routes')
+
 const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 5000;
@@ -23,13 +25,8 @@ app.use(express.json());
 // Load Swagger JS
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// API routes
-app.use('/auth/admin', authAdminRoutes);
-app.use('/auth/officer', authOfficerRoutes);
-app.use('/admin', adminRoutes);
-app.use('/ticket', ticketRoutes);
-app.use('/violations', violationRoutes);
-app.use('/penalties', penaltyRoutes);
+// unite all routes under /api
+app.use('/api', api);
 
 // Connect to DB and start server
 connectDB().then(() => {

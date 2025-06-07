@@ -7,7 +7,6 @@ require('../api-docs/api/authOfficerSwagger');
 
 const router = express.Router();
 
-
 router.post(
   "/register",
   [
