@@ -17,7 +17,7 @@ Make sure you have the following installed:
 
 ```bash
 git clone https://github.com/katsura919/ETCMF-Admin.git
-cd ETCMF-Admin
+cd etcmf-backend-admin
 
 ```
 
