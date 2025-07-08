@@ -4,11 +4,23 @@ const cloudinary = require('../libs/cloudinary');
 
 const getAdminData = async (req, res) => {
   try {
-    const admin = await Admin.findById(req.params.id);
+    // Get admin ID from the decoded token (set by auth middleware)
+    const admin = await Admin.findById(req.admin.id).select('-password');
     if (!admin) {
       return res.status(404).json({ message: 'Admin not found' });
     }
-    res.status(200).json(admin);
+    res.status(200).json({
+      admin: {
+        id: admin._id,
+        firstname: admin.firstname,
+        lastname: admin.lastname,
+        middlename: admin.middlename,
+        email: admin.email,
+        picture: admin.picture,
+        createdAt: admin.createdAt,
+        updatedAt: admin.updatedAt,
+      }
+    });
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err.message });
   }

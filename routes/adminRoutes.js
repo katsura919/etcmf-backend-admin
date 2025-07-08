@@ -20,15 +20,10 @@ const updateAdminValidation = [
 ];
 
 
-// Route to fetch admin data by ID
-router.get('/:id', async (req, res) => {
-  try {
-    const admin = await getAdminData(req, res);
-    res.json(admin);
-  } catch (err) {
-    res.status(500).json({ message: 'Error fetching admin data', error: err.message });
-  }
-});
+
+
+// Route to fetch current admin data using token
+router.get('/me', authMiddleware, getAdminData);
 
 // Route to update admin data
 router.put('/:id', updateAdminValidation, validate, async (req, res) => {
