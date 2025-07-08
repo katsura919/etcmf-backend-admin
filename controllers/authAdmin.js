@@ -39,17 +39,7 @@ const loginAdmin = async (req, res) => {
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
     res.json({
-      token,
-      admin: {
-        id: admin._id,
-        firstname: admin.firstname,
-        lastname: admin.lastname,
-        middlename: admin.middlename,
-        email: admin.email,
-        picture: admin.picture,
-        createdAt: admin.createdAt,
-        updatedAt: admin.updatedAt,
-      }
+      token
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
