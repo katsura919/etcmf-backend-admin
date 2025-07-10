@@ -17,7 +17,11 @@ const app = express();
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
+// Configure CORS to allow requests from the frontend
+app.use(cors({
+  origin: 'http://localhost:3000', 
+  credentials: true // This allows cookies/auth headers to be sent
+}));
 app.use(express.json());
 
 // Load Swagger JS
