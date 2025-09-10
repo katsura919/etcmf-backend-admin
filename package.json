@@ -1,18 +1,46 @@
 {
+  "name": "etcmf-admin",
+  "version": "1.0.0",
+  "description": "Electronic Traffic Citation Management System - Admin Backend",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
+    "dev:watch": "nodemon --exec ts-node src/server.ts",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "postbuild": "echo Build completed successfully"
+  },
   "dependencies": {
+    "@fastify/cors": "^11.1.0",
+    "@fastify/env": "^5.0.2",
+    "@fastify/jwt": "^10.0.0",
+    "@fastify/multipart": "^9.2.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.3.1",
     "bcryptjs": "^3.0.2",
     "cloudinary": "^2.6.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
+    "fastify": "^5.6.0",
+    "fastify-plugin": "^5.0.1",
+    "fluent-json-schema": "^6.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.1",
     "multer": "^1.4.5-lts.2",
     "nodemon": "^3.1.9",
-    "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.1",
-    "yamljs": "^0.3.0"
+    "nodemon-ts": "^1.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "pino-pretty": "^13.1.1",
+    "rimraf": "^6.0.1"
   }
 }
