@@ -55,13 +55,19 @@ const start = async (): Promise<void> => {
     // Connect to database first
     await connectDB();
     
+    // Use environment PORT or default to 5000
+    const port = process.env.PORT ? parseInt(process.env.PORT) : PORT;
+    // Use 0.0.0.0 for production (Render requirement) or localhost for development
+    const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : HOST;
+    
     // Start the server
     await fastify.listen({
-      port: PORT,
-      host: HOST
+      port: port,
+      host: host
     });
     
-    fastify.log.info(`Server running on http://${HOST}:${PORT}`);
+    fastify.log.info(`🚀 Server running on http://${host}:${port}`);
+    fastify.log.info(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   } catch (error) {
     fastify.log.error(error);
     process.exit(1);
