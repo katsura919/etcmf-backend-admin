@@ -4,8 +4,7 @@ import { config } from 'dotenv';
 import { connectDB } from './libs/db';
 
 // Import route handlers
-import authAdminRoutes from './routes/authAdminRoutes';
-import authOfficerRoutes from './routes/authOfficerRoutes';
+import authRoutes from './modules/authentication/auth-route';
 import adminRoutes from './routes/adminRoutes';
 import ticketRoutes from './routes/ticketRoutes';
 import violationRoutes from './routes/violationRoutes';
@@ -43,12 +42,12 @@ fastify.register(cors, {
 });
 
 // Register route plugins
-fastify.register(authAdminRoutes, { prefix: '/auth/admin' });
-fastify.register(authOfficerRoutes, { prefix: '/auth/officer' });
+fastify.register(authRoutes, { prefix: '/auth' });
 fastify.register(adminRoutes, { prefix: '/admin' });
 fastify.register(ticketRoutes, { prefix: '/ticket' });
 fastify.register(violationRoutes, { prefix: '/violations' });
 fastify.register(penaltyRoutes, { prefix: '/penalties' });
+fastify.register(municipalRoutes, { prefix: '/municipal' });
 
 // Start server function
 const start = async (): Promise<void> => {

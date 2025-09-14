@@ -1,5 +1,6 @@
 import { FastifyInstance, FastifyPluginAsync } from 'fastify';
 import mongoose from 'mongoose';
+import { UserRole } from '../models/userModel';
 
 // Common types for request/response
 export interface ApiResponse<T = any> {
@@ -11,8 +12,59 @@ export interface ApiResponse<T = any> {
 
 // Model-related types (re-export from models)
 export type TicketStatus = 'Pending' | 'Paid' | 'Dismissed';
+export { UserRole } from '../models/userModel';
 
-// Admin related types
+// Unified User types
+export interface UserData {
+  id: string;
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  email: string;
+  role: UserRole;
+  picture?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  
+  // Driver-specific fields
+  licenseNo?: string;
+  bday?: Date;
+  nationality?: string;
+  
+  // Officer-specific fields
+  contactNo?: string;
+  
+  // Address field
+  address?: string;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface UserRegisterRequest {
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  email: string;
+  password: string;
+  role: UserRole;
+  picture?: string;
+  
+  // Driver-specific fields
+  licenseNo?: string;
+  bday?: string;
+  nationality?: string;
+  
+  // Officer-specific fields
+  contactNo?: string;
+  
+  // Address field
+  address?: string;
+}
+
+// Legacy types (deprecated - use UserData instead)
 export interface AdminData {
   id: string;
   firstname: string;
@@ -24,11 +76,6 @@ export interface AdminData {
   updatedAt?: Date;
 }
 
-export interface LoginRequest {
-  email: string;
-  password: string;
-}
-
 export interface RegisterRequest {
   firstname: string;
   lastname: string;
@@ -38,7 +85,7 @@ export interface RegisterRequest {
   picture?: string;
 }
 
-// Officer related types
+// Officer related types (legacy)
 export interface OfficerData {
   role: string;
   firstName: string;
